@@ -48,20 +48,26 @@ class Record:
         for ph in self.phones:
             if ph.value == phone:
                 return ph
-        return None
+        return ph
 
-    def remove_phone(self,phone:str):
-        self.phones.remove(self.find_phone(phone))
+    def remove_phone(self, phone):
+        ph = self.find_phone(phone)
+        if ph:
+            self.phones.remove(ph)
+        else:
+            raise ValueError("Phone not found")
 
-def edit_phone(self, old_phone:str, new_phone:str):
-    if self.find_phone(old_phone):
-        self.remove_phone(old_phone)
-        self.add_phone(new_phone)
-    else:
-        raise ValueError
+    def edit_phone(self, old_phone, new_phone):
+        old_ph = self.find_phone(old_phone)
+        if old_ph:
+            if not (new_phone.isdigit() and len(new_phone) == 10):
+                raise ValueError("Invalid new phone number")
+            old_ph.value = new_phone
+        else:
+            raise ValueError("Phone not found")
     
-def __str__(self):
-    return f"Contact name: {str(self.name)}, phones: {'; '.join(str(p) for p in self.phones)}, birthday"
+    def __str__(self):
+        return f"Contact name: {str(self.name)}, phones: {'; '.join(str(p) for p in self.phones)}, birthday"
 
 class AddressBook(UserDict):
     def add_record(self, record:Record):
